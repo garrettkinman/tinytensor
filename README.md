@@ -8,7 +8,7 @@
 A lightweight, dependency-free tensor library that uses zero dynamic memory allocation. Intended for microcontrollers.
 
 # Concept
-This library is part of the broader `tinyNN` framework for TinyML, which is built around a few key principles:
+This library is part of the broader [tinyNN](https://github.com/garrettkinman/tinyNN) framework for TinyML, which is built around a few key principles:
 1. **No dynamic memory allocation.** This is to improve performance and to provide compile-time guarantees of memory usage. Currently no other TinyML frameworks (that I know of) use only static memory allocation.
 2. **A small set of primitive operators.** All higher-level operations (e.g., matrix multiplication) can be broken down to some combination of these primitive operations. So long as these primitive operators (primops) are optimized for hardware, you will have reasonably performant higher-level operations.
 3. **Portable to new hardware.** Porting to new hardware (including dedicated accelerators) is as easy as implementing the primops on the hardware. If that isn't efficient enough, you can implement a new tensor subtype to optimize to your heart's content.
