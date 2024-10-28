@@ -23,10 +23,12 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
 
 # Primitive Operators
 1. Arithmetic Operations
-   1. Element-wise Vector Addition
-   2. Element-wise Vector Subtraction
-   3. Element-wise Vector Multiplication
-   4. Element-wise Scalar Multiplicaiton
+   1. Element-wise Tensor Addition
+   2. Element-wise Scalar Addition
+   3. Element-wise Tensor Subtraction
+   4. Element-wise Scalar Subtraction
+   5. Element-wise Vector Multiplication
+   6. Element-wise Scalar Multiplicaiton
 2. Activation Functions
    1. Element-wise Identity
    2. Element-wise ReLu
