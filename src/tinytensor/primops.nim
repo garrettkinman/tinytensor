@@ -64,7 +64,7 @@ func sum*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
         result += A.data[i]
 
 func mean*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
-    result = A.sum() / A.data.len()
+    result = A.sum() * (1 / A.data.len)
 
 func max*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
     result = A.data[0]  # Initialize with first element

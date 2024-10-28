@@ -15,7 +15,7 @@ func totalSize[rank: static int](shape: static TensorShape[rank]): static int =
 
 type
     Tensor*[T; shape: static TensorShape] = object
-        data: array[totalSize(shape), T]
+        data*: array[totalSize(shape), T]
 
 func initTensor*[T; shape: static TensorShape](default: T = default(T)): Tensor[T, shape] =
     result = Tensor[T, shape](data: default(array[totalSize(shape), T]))
