@@ -30,6 +30,11 @@ func `-`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[T, shape
     for i in 0..<result.data.len:
         result.data[i] = A.data[i] - B.data[i]
 
+func `-`*[T; shape: static TensorShape](A: Tensor[T, shape], a: T): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] - a
+
 func `-`*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
     result = initTensor[T, shape]()
     for i in 0..<result.data.len:
