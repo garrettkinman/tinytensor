@@ -30,6 +30,11 @@ func `-`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[T, shape
     for i in 0..<result.data.len:
         result.data[i] = A.data[i] - B.data[i]
 
+func `-`*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = -A.data[i]
+
 func `*`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[T, shape] =
     result = initTensor[T, shape]()
     for i in 0..<result.data.len:
@@ -124,12 +129,6 @@ func `<=`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[bool, s
 # miscellaneous functions
 # ~~~~~~~~~~~~~~~~~~~~~~~
 
-# TODO: just do `-` operator?
-func `neg`*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
-    result = initTensor[T, shape]()
-    for i in 0..<result.data.len:
-        result.data[i] = -A.data[i]
-
 func recip*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
     result = initTensor[T, shape]()
     for i in 0..<result.data.len:
@@ -168,7 +167,7 @@ func sin*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
 func clamp*[T; shape: static TensorShape](A: Tensor[T, shape], min_val, max_val: T): Tensor[T, shape] =
     result = initTensor[T, shape]()
     for i in 0..<result.data.len:
-        result.data[i] = clamp(A.data[i], min_val .. max_val)
+        result.data[i] = clamp(A.data[i], min_val .. max_val) # TODO: avoid slice?
 
 # ~~~~~~~~~~~~~~~~~~~~
 # activation functions
