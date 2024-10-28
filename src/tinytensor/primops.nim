@@ -173,16 +173,6 @@ func clamp*[T; shape: static TensorShape](A: Tensor[T, shape], min_val, max_val:
 # activation functions
 # ~~~~~~~~~~~~~~~~~~~~
 
-# TODO:
-# 1. Element-wise Identity
-# 2. Element-wise ReLu
-# 3. Element-wise Sigmoid
-# 4. Element-wise Tanh
-# 5. Element-wise Leaky ReLu (?)
-# 6. Element-wise Swish (?)
-# 7. Element-wise GELU (?)
-# 8. Element-wise ELU (?)
-
 func identity*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
     result = A
 
@@ -202,3 +192,9 @@ func tanh*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[float, sha
         numerator = expA - expNegA
         denominator = expA + expNegA
     result = numerator * recip(denominator)
+
+# TODO:
+# Element-wise Leaky ReLu (?)
+# Element-wise Swish (?)
+# Element-wise GELU (?)
+# Element-wise ELU (?)
