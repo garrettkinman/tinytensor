@@ -17,6 +17,8 @@ This library is part of the broader [tinyNN](https://github.com/garrettkinman/ti
 # Hardware Acceleration
 If you want to accelerate this library on custom hardware (e.g., vector/SIMD instructions), just create a new tensor subclass that inherits from `Tensor`, and override the primitive operators with your own optimized implementations.
 
+**TODO:** fix wording, as it's not technically inheritance (generics instead, since true inheritance requires dynamic allocation)
+
 **TODO:** add a code example
 
 # Primitive Operators
@@ -24,8 +26,7 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
    1. Element-wise Vector Addition
    2. Element-wise Vector Subtraction
    3. Element-wise Vector Multiplication
-   4. Element-wise Vector Division
-   5. Element-wise Vector Modulus (?)
+   4. Element-wise Scalar Multiplicaiton
 2. Activation Functions
    1. Element-wise Identity
    2. Element-wise ReLu
@@ -33,8 +34,8 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
    4. Element-wise Tanh
    5. Element-wise Leaky ReLu (?)
    6. Element-wise Swish (?)
-   7. Element-wise Softmax (???)
-   8. More?
+   7. Element-wise GELU (?)
+   8. Element-wise ELU (?)
 3. Reduction Operations
    1. Sum Reduction
    2. Mean Reduction
@@ -42,7 +43,6 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
    4. Min Reduction
    5. Argmax Reduction
    6. Argmin Reduction
-   7. More?
 4. Logical Operations
    1. Element-wise Equal
    2. Element-wise Not Equal
@@ -51,17 +51,12 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
    5. Element-wise Less
    6. Element-wise Less Equal
 5. Miscellaneous Functions
-   1. Element-wise Abs
-   2. Element-wise Sqrt
-   3. Element-wise Pow
-   4. Element-wise Ln
-   5. Element-wise Exp
-   6. Element-wise Sin
-   7. Element-wise Cos
-   8. Element-wise Negate
-   9. Element-wise Floor (?)
-   10. Element-wise Ceil (?)
-   11. Element-wise Round (?)
-   12. Element-wise Clip (?)
-   13. More?
-6. More?
+   1. Element-wise Negate
+   2. Element-wise Reciprocal
+   3. Element-wise Abs
+   4. Element-wise Sqrt
+   5. Element-wise Sq
+   6. Element-wise Ln
+   7. Element-wise Exp
+   8. Element-wise Sin
+   9. Element-wise Clip (?)
