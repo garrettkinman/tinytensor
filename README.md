@@ -43,7 +43,7 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
    4. Min Reduction
    5. Argmax Reduction
    6. Argmin Reduction
-4. Logical Operations
+4. Comparison Operations
    1. Element-wise Equal
    2. Element-wise Not Equal
    3. Element-wise Greater
@@ -59,4 +59,4 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
    6. Element-wise Ln
    7. Element-wise Exp
    8. Element-wise Sin
-   9. Element-wise Clip (?)
+   9. Element-wise Clamp

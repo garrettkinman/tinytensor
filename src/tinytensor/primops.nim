@@ -3,6 +3,7 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
+import std / math
 import tensors
 
 # ~~~~~~~~~~~~~~~~~~~~~
@@ -13,6 +14,16 @@ func `+`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[T, shape
     result = initTensor[T, shape]()
     for i in 0..<result.data.len:
         result.data[i] = A.data[i] + B.data[i]
+
+func `+`*[T; shape: static TensorShape](A: Tensor[T, shape], a: T): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] + a
+
+func `+`*[T; shape: static TensorShape](a: T, A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] + a
 
 func `-`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[T, shape] =
     result = initTensor[T, shape]()
@@ -46,47 +57,118 @@ func mean*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
     result = A.sum() / A.data.len()
 
 func max*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
-    # TODO
-    result = A.sum() / A.data.len()
+    result = A.data[0]  # Initialize with first element
+    for i in 1..<A.data.len:
+        if A.data[i] > result:
+            result = A.data[i]
 
 func min*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
-    # TODO
-    result = A.sum() / A.data.len()
+    result = A.data[0]  # Initialize with first element
+    for i in 1..<A.data.len:
+        if A.data[i] < result:
+            result = A.data[i]
 
-func argmax*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
-    # TODO
-    result = A.sum() / A.data.len()
+func argmax*[T; shape: static TensorShape](A: Tensor[T, shape]): int =
+    result = 0
+    var maxVal = A.data[0]
+    for i in 1..<A.data.len:
+        if A.data[i] > maxVal:
+            maxVal = A.data[i]
+            result = i
 
-func argmin*[T; shape: static TensorShape](A: Tensor[T, shape]): T =
-    # TODO
-    result = A.sum() / A.data.len()
+func argmin*[T; shape: static TensorShape](A: Tensor[T, shape]): int =
+    result = 0
+    var minVal = A.data[0]
+    for i in 1..<A.data.len:
+        if A.data[i] < minVal:
+            minVal = A.data[i]
+            result = i
 
-# ~~~~~~~~~~~~~~~~~~
-# logical operations
-# ~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~
+# comparison operations
+# ~~~~~~~~~~~~~~~~~~~~~
 
-# TODO:
-# 1. Element-wise Equal
-# 2. Element-wise Not Equal
-# 3. Element-wise Greater
-# 4. Element-wise Greater Equal
-# 5. Element-wise Less
-# 6. Element-wise Less Equal
+# TODO: make these return tensors of 1s and 0s (converted to type T) instead of bool?
+
+func `==`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[bool, shape] =
+    result = initTensor[bool, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] == B.data[i]
+
+func `!=`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[bool, shape] =
+    result = initTensor[bool, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] != B.data[i]
+
+func `>`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[bool, shape] =
+    result = initTensor[bool, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] > B.data[i]
+
+func `>=`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[bool, shape] =
+    result = initTensor[bool, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] >= B.data[i]
+
+func `<`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[bool, shape] =
+    result = initTensor[bool, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] < B.data[i]
+
+func `<=`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[bool, shape] =
+    result = initTensor[bool, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] <= B.data[i]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # miscellaneous functions
 # ~~~~~~~~~~~~~~~~~~~~~~~
 
-# TODO:
-# 1. Element-wise Negate
-# 2. Element-wise Reciprocal
-# 3. Element-wise Abs
-# 4. Element-wise Sqrt
-# 5. Element-wise Sq
-# 6. Element-wise Ln
-# 7. Element-wise Exp
-# 8. Element-wise Sin
-# 9. Element-wise Clip (?)
+# TODO: just do `-` operator?
+func `neg`*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = -A.data[i]
+
+func recip*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = 1.T / A.data[i]
+
+func abs*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = abs(A.data[i])
+
+func sqrt*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = sqrt(A.data[i])
+
+func sq*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = A.data[i] * A.data[i]
+
+func ln*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = ln(A.data[i])
+
+func exp*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = exp(A.data[i])
+
+func sin*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = sin(A.data[i])
+
+func clamp*[T; shape: static TensorShape](A: Tensor[T, shape], min_val, max_val: T): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = clamp(A.data[i], min_val .. max_val)
 
 # ~~~~~~~~~~~~~~~~~~~~
 # activation functions
