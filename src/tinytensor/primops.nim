@@ -182,3 +182,23 @@ func clamp*[T; shape: static TensorShape](A: Tensor[T, shape], min_val, max_val:
 # 6. Element-wise Swish (?)
 # 7. Element-wise GELU (?)
 # 8. Element-wise ELU (?)
+
+func identity*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = A
+
+func relu*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = if A.data[i] > T(0): A.data[i] else: T(0)
+
+func sigmoid*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
+    result = recip(T(1) + exp(-A))
+
+func tanh*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[float, shape] =
+    let
+        negA = -A
+        expA = exp(A)
+        expNegA = exp(negA)
+        numerator = expA - expNegA
+        denominator = expA + expNegA
+    result = numerator * recip(denominator)
