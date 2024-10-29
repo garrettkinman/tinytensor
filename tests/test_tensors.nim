@@ -56,7 +56,7 @@ suite "Primitive Operations Tests":
         assert abs(F[1, 1] - 3.0) < epsilon
 
         # Test multiplication
-        let G = A * B
+        let G = hadamard(A, B)
         assert abs(G[0, 0] - 0.5) < epsilon
         assert abs(G[0, 1] - 3.0) < epsilon
         assert abs(G[1, 0] - 7.5) < epsilon

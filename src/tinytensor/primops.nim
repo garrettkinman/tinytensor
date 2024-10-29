@@ -40,7 +40,7 @@ func `-`*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[T, shape] =
     for i in 0..<result.data.len:
         result.data[i] = -A.data[i]
 
-func `*`*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[T, shape] =
+func hadamard*[T; shape: static TensorShape](A, B: Tensor[T, shape]): Tensor[T, shape] =
     result = initTensor[T, shape]()
     for i in 0..<result.data.len:
         result.data[i] = A.data[i] * B.data[i]
@@ -196,7 +196,7 @@ func tanh*[T; shape: static TensorShape](A: Tensor[T, shape]): Tensor[float, sha
         expNegA = exp(negA)
         numerator = expA - expNegA
         denominator = expA + expNegA
-    result = numerator * recip(denominator)
+    result = hadamard(numerator, recip(denominator))
 
 # TODO:
 # Element-wise Leaky ReLu (?)
