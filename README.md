@@ -15,11 +15,9 @@ This library is part of the broader [tinyNN](https://github.com/garrettkinman/ti
 4. **No dependencies.** Working with other TinyML frameworks can be a pain, as there are so many dependencies that can (and often do) give you problems. By avoiding dependencies, this framework is much easier to use, simpler to understand and debug, and less of a pain to set up and use.
 
 # Hardware Acceleration
-If you want to accelerate this library on custom hardware (e.g., vector/SIMD instructions), just create a new tensor subclass that inherits from `Tensor`, and override the primitive operators with your own optimized implementations.
+If you want to accelerate this library on custom hardware (e.g., vector/SIMD instructions), just fork this repository and rewrite the primitive operators (in `src/tinytensor/primops.nim`) with your own optimized implementations.
 
-**TODO:** fix wording, as it's not technically inheritance (generics instead, since true inheritance requires dynamic allocation)
-
-**TODO:** add a code example
+**TODO:** add instructions for installing forked library and using with tinyNN
 
 # Primitive Operators
 1. Arithmetic Operations
