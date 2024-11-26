@@ -20,7 +20,7 @@ type
         data*: array[totalSize(shape), T]
 
 # Helper to get dimensions at compile time
-func dim[rank: static int](shape: static TensorShape[rank], d: static int): static int =
+func dim*[rank: static int](shape: static TensorShape[rank], d: static int): static int =
     const val = shape[d]
     val
 
@@ -65,32 +65,6 @@ func `$`*[T; shape: static TensorShape](t: Tensor[T, shape]): string =
         if i > 0: result.add ", "
         result.add $val
     result.add ")"
-
-# Create a row view into a tensor
-func rowView*[T; shape: static TensorShape](
-    A: var Tensor[T, shape], 
-    row: int
-): StridedVector[T, dim(shape, 1)] =
-    static:
-        assert shape.len == 2, "rowView requires a 2D tensor"
-    
-    StridedVector[T, dim(shape, 1)](
-        data: cast[ptr UncheckedArray[T]](addr A.data[row * dim(shape, 1)]),
-        stride: 1
-    )
-
-# Create a column view into a tensor
-func colView*[T; shape: static TensorShape](
-    A: var Tensor[T, shape], 
-    col: int
-): StridedVector[T, dim(shape, 0)] =
-    static:
-        assert shape.len == 2, "colView requires a 2D tensor"
-    
-    StridedVector[T, dim(shape, 0)](
-        data: cast[ptr UncheckedArray[T]](addr A.data[col]),
-        stride: dim(shape, 1)
-    )
 
 # Example operations
 func map*[T, U; shape: static TensorShape](t: Tensor[T, shape], f: static proc(x: T): U {.noSideEffect.}): Tensor[U, shape] =

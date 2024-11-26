@@ -27,6 +27,7 @@ If you want to accelerate this library on custom hardware (e.g., vector/SIMD ins
    4. Element-wise Scalar Subtraction
    5. Element-wise Vector Multiplication
    6. Element-wise Scalar Multiplicaiton
+   7. Dot Product
 2. Activation Functions
    1. Element-wise Identity
    2. Element-wise ReLu

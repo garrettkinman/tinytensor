@@ -55,7 +55,10 @@ func scale*[T; n: static int](a: StridedVector[T, n], b: T, result: var StridedV
     for i in 0..<n:
         result.data[i] = a.data[i] * b
 
-# TODO: dot product?
+func dot*[T; n: static int](a, b: StridedVector[T, n]): T =
+    result = T(0)
+    for i in 0..<n:
+        result += a.data[i] * b.data[i]
 
 # ~~~~~~~~~~~~~~~~~~~~
 # reduction operations
