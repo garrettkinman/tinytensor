@@ -3,5 +3,5 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
-import tinytensor / [tensors, primops]
-export tensors, primops
+import tinytensor / [tensors, primops, matmul]
+export tensors, primops, matmul
