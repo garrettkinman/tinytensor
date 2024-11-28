@@ -7,32 +7,32 @@ import tensors, primops
 
 # Create a row view into a tensor
 func rowView*[T; shape: static TensorShape](
-    A: var Tensor[T, shape], 
+    A: Tensor[T, shape],
     row: int
 ): StridedVector[T, dim(shape, 1)] =
     static:
         assert shape.len == 2, "rowView requires a 2D tensor"
     
     StridedVector[T, dim(shape, 1)](
-        data: cast[ptr UncheckedArray[T]](addr A.data[row * dim(shape, 1)]),
+        data: cast[ptr UncheckedArray[T]](unsafeAddr A.data[row * dim(shape, 1)]),
         stride: 1
     )
 
 # Create a column view into a tensor
 func colView*[T; shape: static TensorShape](
-    A: var Tensor[T, shape], 
+    A: Tensor[T, shape],
     col: int
 ): StridedVector[T, dim(shape, 0)] =
     static:
         assert shape.len == 2, "colView requires a 2D tensor"
     
     StridedVector[T, dim(shape, 0)](
-        data: cast[ptr UncheckedArray[T]](addr A.data[col]),
+        data: cast[ptr UncheckedArray[T]](unsafeAddr A.data[col]),
         stride: dim(shape, 1)
     )
 
 # Helper function to compute matmul output shape at compile time
-func matmulShape*(shape1, shape2: static TensorShape[2]): static TensorShape[2] =
+func matmulShape*(shape1, shape2: static TensorShape[2]): static TensorShape[2] {.compileTime.} =
     const 
         M = shape1[0]
         K1 = shape1[1]

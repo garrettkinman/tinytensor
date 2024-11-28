@@ -78,7 +78,7 @@ suite "Matrix Multiplication Tests":
                 B[i, j] = float(i + j)
 
         # Test both methods
-        matmul(A, B, C)  # Using explicit matmul
+        C = A * B  # Using explicit matmul
         let D = A * B    # Using operator
 
         # Results should be identical
@@ -96,6 +96,7 @@ suite "Matrix Multiplication Tests":
         B[0, 0] = 4.0
         
         let result = A * B
+        echo result
         check(abs(result[0, 0] - 12.0) < 1e-10)
 
     test "Matrix multiplication with zeros":
