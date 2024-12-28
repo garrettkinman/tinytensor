@@ -86,6 +86,7 @@ suite "Matrix Multiplication Tests":
             for j in 0..1:
                 check(abs(C[i, j] - D[i, j]) < 1e-10)
 
+    # TODO: debug why 1x1 matrices don't seem to work
     test "1x1 matrix multiplication":
         const shape: TensorShape[2] = [1, 1]
         var
@@ -96,7 +97,6 @@ suite "Matrix Multiplication Tests":
         B[0, 0] = 4.0
         
         let result = A * B
-        echo result
         check(abs(result[0, 0] - 12.0) < 1e-10)
 
     test "Matrix multiplication with zeros":

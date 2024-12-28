@@ -5,7 +5,7 @@
 
 # test_primops.nim
 import unittest
-import tinytensor/primops
+import tinytensor
 import math
 
 suite "Primitive Operations Tests":

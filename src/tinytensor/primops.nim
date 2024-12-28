@@ -15,10 +15,10 @@ type
         data*: ptr UncheckedArray[T]  # Raw pointer to the first element
         stride*: int                   # Distance between consecutive elements
 
-func `[]`*[T; n: static int](v: StridedVector[T, n], index: int): T =
+func `[]`*[T; n: static int](v: StridedVector[T, n], index: int): T {.inline.} =
     result = v.data[index * v.stride]
 
-func `[]=`*[T; n: static int](v: StridedVector[T, n], index: int, value: T) =
+func `[]=`*[T; n: static int](v: var StridedVector[T, n], index: int, value: T) {.inline.} =
     v.data[index * v.stride] = value
 
 # proc init*[T](_: typedesc[StridedVector[T; n: static int]], shape: openArray[int]): Tensor[T] = newTensor[T](shape)

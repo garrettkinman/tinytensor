@@ -14,7 +14,7 @@ func rowView*[T; shape: static TensorShape](
         assert shape.len == 2, "rowView requires a 2D tensor"
     
     StridedVector[T, dim(shape, 1)](
-        data: cast[ptr UncheckedArray[T]](unsafeAddr A.data[row * dim(shape, 1)]),
+        data: cast[ptr UncheckedArray[T]](addr A.data[row * dim(shape, 1)]),
         stride: 1
     )
 
@@ -27,7 +27,7 @@ func colView*[T; shape: static TensorShape](
         assert shape.len == 2, "colView requires a 2D tensor"
     
     StridedVector[T, dim(shape, 0)](
-        data: cast[ptr UncheckedArray[T]](unsafeAddr A.data[col]),
+        data: cast[ptr UncheckedArray[T]](addr A.data[col]),
         stride: dim(shape, 1)
     )
 
