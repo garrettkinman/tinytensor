@@ -21,8 +21,6 @@ func `[]`*[T; n: static int](v: StridedVector[T, n], index: int): T {.inline.} =
 func `[]=`*[T; n: static int](v: var StridedVector[T, n], index: int, value: T) {.inline.} =
     v.data[index * v.stride] = value
 
-# proc init*[T](_: typedesc[StridedVector[T; n: static int]], shape: openArray[int]): Tensor[T] = newTensor[T](shape)
-
 # ~~~~~~~~~~~~~~~~~~~~~
 # arithmetic operations
 # ~~~~~~~~~~~~~~~~~~~~~

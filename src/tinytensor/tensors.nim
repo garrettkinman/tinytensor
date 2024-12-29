@@ -3,6 +3,7 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
+import random
 import primops
 
 type
@@ -28,6 +29,13 @@ func initTensor*[T; shape: static TensorShape](default: T = default(T)): Tensor[
     result = Tensor[T, shape](data: default(array[totalSize(shape), T]))
     for i in 0..<result.data.len:
         result.data[i] = default
+
+func initTensor*[T; shape: static TensorShape; N: static int](data: array[N, T]): Tensor[T, shape] =
+    static:
+        # Verify at compile time that the array size matches tensor shape
+        assert N == totalSize(shape), "Input array size must match tensor shape"
+    
+    result = Tensor[T, shape](data: data)
 
 func `[]`*[T; shape: static TensorShape](t: Tensor[T, shape], indices: varargs[int]): T =
     assert indices.len == shape.len, "Invalid number of indices"
@@ -65,6 +73,19 @@ func `$`*[T; shape: static TensorShape](t: Tensor[T, shape]): string =
         if i > 0: result.add ", "
         result.add $val
     result.add ")"
+
+# Initialization functions
+func zeros*[T; shape: static TensorShape](): Tensor[T, shape] =
+    initTensor[T, shape](default(T))
+
+func ones*[T; shape: static TensorShape](): Tensor[T, shape] =
+    result = initTensor[T, shape](1.T)
+
+proc rand*[T; shape: static TensorShape](min: T = 0.T, max: T = 1.T): Tensor[T, shape] =
+    # This has side effects (on global RNG state), hence `proc` instead of `func`
+    result = initTensor[T, shape]()
+    for i in 0..<result.data.len:
+        result.data[i] = rand(min..max)
 
 # Example operations
 func map*[T, U; shape: static TensorShape](t: Tensor[T, shape], f: static proc(x: T): U {.noSideEffect.}): Tensor[U, shape] =
